@@ -6,6 +6,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -29,11 +30,11 @@ public class Appointment implements IAppointment{
 	private String type;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@Column(name = "advertiser_id")
+	@JoinColumn(name = "advertiser_id")
 	private Advertiser advertiser;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@Column(name = "adress_id")
+	@JoinColumn(name = "adress_id")
 	private Adress adress;
 	
 	public String getAt() {
