@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.tonasolution.appointnear.AppointnearApplication;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(
+@SpringBootTest( 
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 		classes = AppointnearApplication.class
 )

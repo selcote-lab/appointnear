@@ -1,5 +1,7 @@
 package com.tonasolution.appointnear.controllers;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
@@ -14,17 +16,26 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tonasolution.appointnear.business.AppointmentService;
+import com.tonasolution.appointnear.models.Adress;
+import com.tonasolution.appointnear.models.Advertiser;
+import com.tonasolution.appointnear.models.Appointment;
+import com.tonasolution.appointnear.models.IAppointment;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
 public class AppointmentControllerTests {
+	public static final String API_URL = "/api/v1/appointments/";
 	
 	@Autowired
-	MockMvc mockMvc;
+	private MockMvc mockMvc;
+	
+	@Autowired 
+	private ObjectMapper mapper;
 	
 	@MockBean
-	AppointmentService appointmentService;
+	private AppointmentService appointmentService;
 	
 	@Test
 	public void testGetAll() throws Exception {
@@ -33,12 +44,49 @@ public class AppointmentControllerTests {
 				.thenReturn(Collections.EMPTY_LIST);
 		
 		MvcResult mvcResult = mockMvc.perform(
-					MockMvcRequestBuilders.get("/api/v1/all")
+					MockMvcRequestBuilders.get(API_URL + "all")
 					.accept(MediaType.APPLICATION_JSON)
-				).andReturn();
+				)
+				.andReturn();
 		
 		System.out.println(mvcResult.getResponse());
 		
+	}
+	
+	@Test
+	public void create() throws Exception {
+		
+		Adress adress = new Adress();
+		adress.setCity("Paris");
+		adress.setCountry("France");
+		adress.setRegion("region");
+		adress.setZipCode("62000");
+		
+		Advertiser advertiser = new Advertiser();
+		advertiser.setEmail("test@gmail.com");
+		advertiser.setFirstName("Firstname");
+		advertiser.setLastName("last name");
+		advertiser.setPhoneNumber("+212 616714599");
+		
+		IAppointment appointment = new Appointment();
+		appointment.setAdress(adress);
+		appointment.setAdvertiser(advertiser);
+		appointment.setAt("12/12/2010");
+		appointment.setDescription("description ....");
+		appointment.setPrice(12.12);
+		appointment.setType("residence");
+		
+//		Mockito.when(this.appointmentService.saveOrUpdate(appointment))
+//			   .thenReturn(appointment);
+		System.out.println(this.mapper.writeValueAsString(appointment));
+		
+//		mockMvc.perform(
+//					MockMvcRequestBuilders.post(API_URL + "new")
+//					.content(this.mapper.writeValueAsString(appointment))
+//					.contentType(MediaType.APPLICATION_JSON)
+//					.accept(MediaType.APPLICATION_JSON)
+//				)
+//			   .andExpect(status().isCreated()); 
 	}
 }
 

@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity(name="Appointment")
 @Table(name = "appointment")
@@ -18,23 +19,28 @@ public class Appointment implements IAppointment{
 	private Long _id;
 	
 	@Column(name = "at")
+	@NotNull
 	private String at;
 	
 	@Column(name = "description")
 	private String description;
 	
 	@Column(name = "price")
+	@NotNull
 	private double price;
 	
 	@Column(name = "type")
+	@NotNull
 	private String type;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "advertiser_id")
+	@NotNull
 	private Advertiser advertiser;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "adress_id")
+	@NotNull
 	private Adress adress;
 	
 	public String getAt() {
