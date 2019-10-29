@@ -1,5 +1,7 @@
 package com.tonasolution.appointnear.controllers;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Collections;
@@ -75,18 +77,26 @@ public class AppointmentControllerTests {
 		appointment.setDescription("description ....");
 		appointment.setPrice(12.12);
 		appointment.setType("residence");
+		appointment.set_id(12L);
 		
-//		Mockito.when(this.appointmentService.saveOrUpdate(appointment))
-//			   .thenReturn(appointment);
-		System.out.println(this.mapper.writeValueAsString(appointment));
 		
-//		mockMvc.perform(
-//					MockMvcRequestBuilders.post(API_URL + "new")
-//					.content(this.mapper.writeValueAsString(appointment))
-//					.contentType(MediaType.APPLICATION_JSON)
-//					.accept(MediaType.APPLICATION_JSON)
-//				)
-//			   .andExpect(status().isCreated()); 
+		when(this.appointmentService.saveOrUpdate(appointment)).thenReturn(appointment);
+		
+		String appToJson = this.mapper.writeValueAsString(appointment);
+		
+		System.out.println(appToJson);
+		
+		MvcResult result = mockMvc.perform(
+					MockMvcRequestBuilders.post(API_URL + "new")
+					.content(appToJson)
+					.contentType(MediaType.APPLICATION_JSON)
+					.characterEncoding("utf-8")
+					.accept(MediaType.APPLICATION_JSON)
+				)
+			   .andExpect(status().isCreated())
+			   .andReturn(); 
+		System.out.println(result.toString());
+		
 	}
 }
 

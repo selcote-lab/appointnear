@@ -2,6 +2,7 @@ package com.tonasolution.appointnear.business;
 
 import java.util.List;
 
+import com.tonasolution.appointnear.models.Appointment;
 import com.tonasolution.appointnear.models.IAppointment;
 
 public interface AppointmentService {

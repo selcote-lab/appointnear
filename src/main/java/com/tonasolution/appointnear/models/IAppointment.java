@@ -29,4 +29,5 @@ public interface IAppointment {
 	public void setAdress(Adress adress);
 
 	public Long get_id();
+	public void set_id(Long _id);
 }

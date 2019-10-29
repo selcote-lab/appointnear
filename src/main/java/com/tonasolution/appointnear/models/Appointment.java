@@ -96,6 +96,11 @@ public class Appointment implements IAppointment{
 		this.adress = adress;
 	}
 
+	
+	public void set_id(Long _id) {
+		this._id = _id;
+	}
+
 	public Long get_id() {
 		return _id;
 	}
