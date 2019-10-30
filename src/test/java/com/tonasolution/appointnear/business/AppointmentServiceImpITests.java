@@ -2,18 +2,16 @@ package com.tonasolution.appointnear.business;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.tonasolution.appointnear.AppointnearApplication;
@@ -28,27 +26,23 @@ import com.tonasolution.appointnear.models.IAppointment;
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
 		classes = AppointnearApplication.class
 )
-public class AppointmentServiceImpTests {
+@AutoConfigureMockMvc
+@TestPropertySource(locations = "classpath:application.properties")
+public class AppointmentServiceImpITests {
 	
 	@Autowired
 	AppointmentService appointmentService;
 	
-	@MockBean
-	private AppointmentDao appointmentDao;
-	
 	@Test
 	public void testListAll() {
 		
-		Mockito.when(this.appointmentDao.findAll())
-		.thenReturn(Collections.EMPTY_LIST);
-		
 		List<IAppointment> appointments = this.appointmentService.listAll();
-		
 		assertEquals(0, appointments.size());
+		
 	}
 	
 	@Test
-	public void testSaveOrUpdate() { 
+	public void testSaveOrUpdate() {
 		Adress adress = new Adress();
 		adress.setCity("Paris");
 		adress.setCountry("France");
@@ -68,16 +62,10 @@ public class AppointmentServiceImpTests {
 		appointment.setDescription("description ....");
 		appointment.setPrice(12.12);
 		appointment.setType("residence");
-		appointment.set_id(12L);
-
-		
-		Mockito.when(this.appointmentDao.save((Appointment)appointment))
-		.thenReturn((Appointment)appointment);
 		
 		IAppointment appointmentsaved = this.appointmentService.saveOrUpdate(appointment);
 		
-		assertEquals(appointment.get_id(), appointmentsaved.get_id());
-		
+		assertEquals(12.12, appointmentsaved.getPrice());
 	}
 
 }

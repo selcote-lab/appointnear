@@ -1,5 +1,6 @@
 package com.tonasolution.appointnear.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,12 +34,12 @@ public class Appointment implements IAppointment{
 	@NotNull
 	private String type;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "advertiser_id")
 	@NotNull
 	private Advertiser advertiser;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "adress_id")
 	@NotNull
 	private Adress adress;
