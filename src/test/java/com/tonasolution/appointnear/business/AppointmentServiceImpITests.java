@@ -65,7 +65,7 @@ public class AppointmentServiceImpITests {
 		
 		IAppointment appointmentsaved = this.appointmentService.saveOrUpdate(appointment);
 		
-		assertEquals(12.12, appointmentsaved.getPrice());
+		assertEquals(13.12, appointmentsaved.getPrice());
 	}
 
 }
