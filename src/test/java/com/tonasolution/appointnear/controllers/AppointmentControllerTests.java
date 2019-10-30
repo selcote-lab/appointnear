@@ -1,6 +1,5 @@
 package com.tonasolution.appointnear.controllers;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -56,7 +55,7 @@ public class AppointmentControllerTests {
 	}
 	
 	@Test
-	public void create() throws Exception {
+	public void testCreate() throws Exception {
 		
 		Adress adress = new Adress();
 		adress.setCity("Paris");
