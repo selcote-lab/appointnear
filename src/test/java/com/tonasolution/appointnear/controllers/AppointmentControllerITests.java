@@ -1,5 +1,6 @@
 package com.tonasolution.appointnear.controllers;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Collections;
@@ -19,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tonasolution.appointnear.AppointnearApplication;
+import com.tonasolution.appointnear.business.AppointmentService;
 import com.tonasolution.appointnear.models.Adress;
 import com.tonasolution.appointnear.models.Advertiser;
 import com.tonasolution.appointnear.models.Appointment;
@@ -40,20 +42,59 @@ public class AppointmentControllerITests {
 	@Autowired 
 	private ObjectMapper mapper;
 	
+	@Autowired
+	AppointmentService appointmentService;
+	
 	@Test
 	public void testGetAll() throws Exception {
 		
-		MvcResult mvcResult = mockMvc.perform(
+		mockMvc.perform(
 					MockMvcRequestBuilders.get(API_URL + "all")
 					.accept(MediaType.APPLICATION_JSON)
-				).andReturn();
-		
-		System.out.println(mvcResult.getResponse());
+		).andExpect(status().isAccepted());
 		
 	}
 	
 	@Test
-	public void create() throws Exception {
+	public void testCreate() throws Exception {
+		
+		String objToJson = this.mapper.writeValueAsString(getAppointment());
+		
+		mockMvc.perform(
+					MockMvcRequestBuilders.post(API_URL + "new")
+					.accept(MediaType.APPLICATION_JSON)
+					.characterEncoding("utf-8")
+					.content(objToJson)
+					.contentType(MediaType.APPLICATION_JSON)
+				)
+				.andExpect(status().isCreated());
+	}
+	
+	@Test
+	public void testDelete() throws Exception {
+		
+		mockMvc.perform(
+				MockMvcRequestBuilders.delete(API_URL + "{id}/delete", "1")
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testGetById() throws Exception {
+		
+		IAppointment appointment = this.appointmentService.saveOrUpdate(getAppointment());
+		mockMvc.perform(
+					MockMvcRequestBuilders.get(API_URL + "get/by/{id}", String.valueOf(appointment.get_id()))
+					.accept(MediaType.APPLICATION_JSON)
+					.contentType(MediaType.APPLICATION_JSON)
+				)
+				.andExpect(status().isAccepted());
+	}
+	
+	private IAppointment getAppointment() {
+		
 		Adress adress = new Adress();
 		adress.setCity("Paris");
 		adress.setCountry("France");
@@ -74,27 +115,6 @@ public class AppointmentControllerITests {
 		appointment.setPrice(12.12);
 		appointment.setType("residence");
 		
-		
-		String objToJson = this.mapper.writeValueAsString(appointment);
-		
-		mockMvc.perform(
-					MockMvcRequestBuilders.post(API_URL + "new")
-					.accept(MediaType.APPLICATION_JSON)
-					.characterEncoding("utf-8")
-					.content(objToJson)
-					.contentType(MediaType.APPLICATION_JSON)
-				)
-				.andExpect(status().isCreated());
-	}
-	
-	@Test
-	public void delete() throws Exception {
-		
-		mockMvc.perform(
-				MockMvcRequestBuilders.delete(API_URL + "delete/{id}", "1")
-				.accept(MediaType.APPLICATION_JSON)
-				.contentType(MediaType.APPLICATION_JSON)
-			)
-			.andExpect(status().isOk());
+		return appointment;
 	}
 }

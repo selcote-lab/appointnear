@@ -1,6 +1,9 @@
 package com.tonasolution.appointnear.business;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 
@@ -53,7 +56,7 @@ public class AppointmentServiceImpITests {
 		advertiser.setEmail("test@gmail.com");
 		advertiser.setFirstName("Firstname");
 		advertiser.setLastName("last name");
-		advertiser.setPhoneNumber("+212 616714599");
+		advertiser.setPhoneNumber("+212 99090009999");
 		
 		IAppointment appointment = new Appointment();
 		appointment.setAdress(adress);
@@ -72,5 +75,10 @@ public class AppointmentServiceImpITests {
 	public void delete() {
 		this.appointmentService.delete(null);
 	}
-
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void getById() throws Exception {
+		this.appointmentService.getById(null);
+	}
+	
 }

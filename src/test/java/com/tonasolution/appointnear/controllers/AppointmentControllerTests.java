@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -71,14 +72,7 @@ public class AppointmentControllerTests {
 		advertiser.setLastName("last name");
 		advertiser.setPhoneNumber("+212 616714599");
 		
-		IAppointment appointment = new Appointment();
-		appointment.setAdress(adress);
-		appointment.setAdvertiser(advertiser);
-		appointment.setAt("12/12/2010");
-		appointment.setDescription("description ....");
-		appointment.setPrice(12.12);
-		appointment.setType("residence");
-		appointment.set_id(12L);
+		IAppointment appointment = getAppointment();
 		
 		
 		when(this.appointmentService.saveOrUpdate(appointment)).thenReturn(appointment);
@@ -103,11 +97,50 @@ public class AppointmentControllerTests {
 		doNothing().when(this.appointmentService).delete(1L);
 		
 		mockMvc.perform(
-					MockMvcRequestBuilders.delete(API_URL + "delete/{id}", "1")
+					MockMvcRequestBuilders.delete(API_URL + "{id}/delete", "1")
 					.accept(MediaType.APPLICATION_JSON)
 					.contentType(MediaType.APPLICATION_JSON)
 				)
 				.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testGetById() throws Exception {
+		
+		IAppointment appointment = getAppointment();
+		when(this.appointmentService.getById(1L)).thenReturn(appointment);
+				
+		mockMvc.perform(
+					MockMvcRequestBuilders.get(API_URL + "get/{id}", "1")
+					.accept(MediaType.APPLICATION_JSON)
+					.contentType(MediaType.APPLICATION_JSON)
+				)
+				.andExpect(status().isAccepted());
+	}
+	
+	private IAppointment getAppointment() {
+		Adress adress = new Adress();
+		adress.setCity("Paris");
+		adress.setCountry("France");
+		adress.setRegion("region");
+		adress.setZipCode("62000");
+		
+		Advertiser advertiser = new Advertiser();
+		advertiser.setEmail("test@gmail.com");
+		advertiser.setFirstName("Firstname");
+		advertiser.setLastName("last name");
+		advertiser.setPhoneNumber("+212 616714599");
+		
+		IAppointment appointment = new Appointment();
+		appointment.setAdress(adress);
+		appointment.setAdvertiser(advertiser);
+		appointment.setAt("12/12/2010");
+		appointment.setDescription("description ....");
+		appointment.setPrice(12.12);
+		appointment.setType("residence");
+		appointment.set_id(12L);
+		
+		return appointment;
 	}
 }
 

@@ -32,11 +32,12 @@ public class AppointmentServiceImp implements AppointmentService {
 
 	@Override
 	public IAppointment getById(Long id) throws Exception {
+		
+		if(id == null) throw new IllegalArgumentException("Input not valid");
+		
 		Optional<Appointment> appointmentOpt = this.appointmentDao.findById(id);
 		
-		if (appointmentOpt.isPresent()) return appointmentOpt.get();
-		
-		throw new Exception("Entity not found");
+		return appointmentOpt.get();
 	}
 
 	@Override

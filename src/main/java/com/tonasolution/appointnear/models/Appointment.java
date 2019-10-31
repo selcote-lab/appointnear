@@ -34,12 +34,12 @@ public class Appointment implements IAppointment{
 	@NotNull
 	private String type;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "advertiser_id")
 	@NotNull
 	private Advertiser advertiser;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "adress_id")
 	@NotNull
 	private Adress adress;

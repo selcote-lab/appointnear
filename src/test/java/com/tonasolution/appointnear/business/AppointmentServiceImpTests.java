@@ -5,10 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,28 +55,8 @@ public class AppointmentServiceImpTests {
 	
 	@Test
 	public void testSaveOrUpdate() { 
-		Adress adress = new Adress();
-		adress.setCity("Paris");
-		adress.setCountry("France");
-		adress.setRegion("region");
-		adress.setZipCode("62000");
 		
-		Advertiser advertiser = new Advertiser();
-		advertiser.setEmail("test@gmail.com");
-		advertiser.setFirstName("Firstname");
-		advertiser.setLastName("last name");
-		advertiser.setPhoneNumber("+212 616714599");
-		
-		IAppointment appointment = new Appointment();
-		appointment.setAdress(adress);
-		appointment.setAdvertiser(advertiser);
-		appointment.setAt("12/12/2010");
-		appointment.setDescription("description ....");
-		appointment.setPrice(12.12);
-		appointment.setType("residence");
-		appointment.set_id(12L);
-
-		
+		IAppointment appointment = getAppointment().get();
 		Mockito.when(this.appointmentDao.save((Appointment)appointment))
 		.thenReturn((Appointment)appointment);
 		
@@ -92,6 +74,41 @@ public class AppointmentServiceImpTests {
 		this.appointmentService.delete(1L);
 		
 		verify(this.appointmentDao, times(1)).deleteById(1L);
+	}
+	
+	@Test
+	public void getById() throws Exception {
+		when(this.appointmentDao.findById(1L)).thenReturn(getAppointment());
+		
+		this.appointmentService.getById(1L);
+		
+		verify(this.appointmentDao, times(1)).findById(1L);
+	}
+	
+	private Optional<Appointment> getAppointment() {
+		Adress adress = new Adress();
+		adress.setCity("Paris");
+		adress.setCountry("France");
+		adress.setRegion("region");
+		adress.setZipCode("62000");
+		
+		Advertiser advertiser = new Advertiser();
+		advertiser.setEmail("test@gmail.com");
+		advertiser.setFirstName("Firstname");
+		advertiser.setLastName("last name");
+		advertiser.setPhoneNumber("+212 616799599");
+		
+		Appointment appointment = new Appointment();
+		appointment.setAdress(adress);
+		appointment.setAdvertiser(advertiser);
+		appointment.setAt("12/12/2010");
+		appointment.setDescription("description ....");
+		appointment.setPrice(12.12);
+		appointment.setType("residence");
+		appointment.set_id(12L);
+		
+		return Optional.of(appointment);
+		
 	}
 	
 }

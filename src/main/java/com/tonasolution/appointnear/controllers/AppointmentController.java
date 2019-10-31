@@ -28,7 +28,7 @@ import com.tonasolution.appointnear.models.Appointment;
 import com.tonasolution.appointnear.models.IAppointment;
 
 @RestController
-@RequestMapping("/api/v1/appointments")
+@RequestMapping("/api/v1/appointments/")
 public class AppointmentController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(AppointmentController.class);
@@ -39,12 +39,28 @@ public class AppointmentController {
 		this.appointmentService = appointmentService;
 	}
 	
-	@GetMapping("/all")
-	public List<IAppointment> getAll(){
-		return this.appointmentService.listAll();
+	@GetMapping("all")
+	public ResponseEntity<List<IAppointment>> getAll(){
+		try {
+			return new ResponseEntity<List<IAppointment>>(
+						this.appointmentService.listAll(), 
+						HttpStatus.ACCEPTED
+					);
+		}
+		catch(Exception e) {
+			LOGGER.debug(
+					e.getMessage() 
+					+ " \n stack trace by " 
+					+ e.getStackTrace()
+					+ "\n caused by " + e.getCause()
+					);
+			return  ResponseEntity.noContent().build();
+			
+		}
+		
 	}
 	
-	@PostMapping("/new")
+	@PostMapping("new")
 	public ResponseEntity<Void> create(@RequestBody  @Valid Appointment appointment){
 		
 		try {
@@ -71,11 +87,31 @@ public class AppointmentController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-	@DeleteMapping("delete/{id}")
+	@DeleteMapping("{id}/delete")
 	public ResponseEntity<Void> delete(@PathVariable String id){
 		try {
 			this.appointmentService.delete(Long.decode(id));
 			return ResponseEntity.ok().build();
+		}
+		catch (IllegalArgumentException e) {
+			return ResponseEntity.badRequest().build();
+		}
+		catch(Exception e) {
+			LOGGER.debug(
+					e.getMessage() 
+					+ " \n stack trace by " 
+					+ e.getStackTrace()
+					+ "\n caused by " + e.getCause()
+					);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}		
+	}
+	
+	@GetMapping("get/by/{id}")
+	public ResponseEntity<IAppointment> getById(@PathVariable String id){
+		try {
+			IAppointment appointment = this.appointmentService.getById(Long.decode(id));
+			return new ResponseEntity<IAppointment>(appointment, HttpStatus.ACCEPTED);
 		}
 		catch (IllegalArgumentException e) {
 			return ResponseEntity.badRequest().build();
