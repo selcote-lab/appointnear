@@ -65,7 +65,12 @@ public class AppointmentServiceImpITests {
 		
 		IAppointment appointmentsaved = this.appointmentService.saveOrUpdate(appointment);
 		
-		assertEquals(13.12, appointmentsaved.getPrice());
+		assertEquals(12.12, appointmentsaved.getPrice());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void delete() {
+		this.appointmentService.delete(null);
 	}
 
 }

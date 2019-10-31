@@ -86,4 +86,15 @@ public class AppointmentControllerITests {
 				)
 				.andExpect(status().isCreated());
 	}
+	
+	@Test
+	public void delete() throws Exception {
+		
+		mockMvc.perform(
+				MockMvcRequestBuilders.delete(API_URL + "delete/{id}", "1")
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(status().isOk());
+	}
 }

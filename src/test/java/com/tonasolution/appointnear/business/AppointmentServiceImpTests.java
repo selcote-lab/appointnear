@@ -1,6 +1,10 @@
 package com.tonasolution.appointnear.business;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -79,5 +83,15 @@ public class AppointmentServiceImpTests {
 		assertEquals(appointment.get_id(), appointmentsaved.get_id());
 		
 	}
-
+	
+	@Test
+	public void delete() {
+		
+		doNothing().when(this.appointmentDao).deleteById(1L);
+		
+		this.appointmentService.delete(1L);
+		
+		verify(this.appointmentDao, times(1)).deleteById(1L);
+	}
+	
 }

@@ -1,5 +1,7 @@
 package com.tonasolution.appointnear.controllers;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -82,10 +84,8 @@ public class AppointmentControllerTests {
 		when(this.appointmentService.saveOrUpdate(appointment)).thenReturn(appointment);
 		
 		String appToJson = this.mapper.writeValueAsString(appointment);
-		
-		System.out.println(appToJson);
-		
-		MvcResult result = mockMvc.perform(
+
+		mockMvc.perform(
 					MockMvcRequestBuilders.post(API_URL + "new")
 					.content(appToJson)
 					.contentType(MediaType.APPLICATION_JSON)
@@ -94,8 +94,20 @@ public class AppointmentControllerTests {
 				)
 			   .andExpect(status().isCreated())
 			   .andReturn(); 
-		System.out.println(result.toString());
 		
+	}
+	
+	@Test
+	public void testDelete() throws Exception {
+		
+		doNothing().when(this.appointmentService).delete(1L);
+		
+		mockMvc.perform(
+					MockMvcRequestBuilders.delete(API_URL + "delete/{id}", "1")
+					.accept(MediaType.APPLICATION_JSON)
+					.contentType(MediaType.APPLICATION_JSON)
+				)
+				.andExpect(status().isOk());
 	}
 }
 

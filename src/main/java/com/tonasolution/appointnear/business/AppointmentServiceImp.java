@@ -46,6 +46,7 @@ public class AppointmentServiceImp implements AppointmentService {
 
 	@Override
 	public void delete(Long id) {
+		if (id == null) throw new IllegalArgumentException("Bad attribute");
 		this.appointmentDao.deleteById(id);
 		
 	}
