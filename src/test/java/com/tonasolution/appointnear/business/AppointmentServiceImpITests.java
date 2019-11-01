@@ -36,49 +36,49 @@ public class AppointmentServiceImpITests {
 	@Autowired
 	AppointmentService appointmentService;
 	
-//	@Test
-//	public void testListAll() {
-//		
-//		List<IAppointment> appointments = this.appointmentService.listAll();
-//		assertEquals(0, appointments.size());
-//		
-//	}
-//	
-//	@Test
-//	public void testSaveOrUpdate() {
-//		Adress adress = new Adress();
-//		adress.setCity("Paris");
-//		adress.setCountry("France");
-//		adress.setRegion("region");
-//		adress.setZipCode("62000");
-//		
-//		Advertiser advertiser = new Advertiser();
-//		advertiser.setEmail("test@gmail.com");
-//		advertiser.setFirstName("Firstname");
-//		advertiser.setLastName("last name");
-//		advertiser.setPhoneNumber("+212 99090009999");
-//		
-//		IAppointment appointment = new Appointment();
-//		appointment.setAdress(adress);
-//		appointment.setAdvertiser(advertiser);
-//		appointment.setAt("12/12/2010");
-//		appointment.setDescription("description ....");
-//		appointment.setPrice(12.12);
-//		appointment.setType("residence");
-//		
-//		IAppointment appointmentsaved = this.appointmentService.saveOrUpdate(appointment);
-//		
-//		assertEquals(12.12, appointmentsaved.getPrice());
-//	}
-//	
-//	@Test(expected = IllegalArgumentException.class)
-//	public void delete() {
-//		this.appointmentService.delete(null);
-//	}
-//	
-//	@Test(expected = IllegalArgumentException.class)
-//	public void getById() throws Exception {
-//		this.appointmentService.getById(null);
-//	}
+	@Test
+	public void testListAll() {
+		
+		List<IAppointment> appointments = this.appointmentService.listAll();
+		assertEquals(0, appointments.size());
+		
+	}
+	
+	@Test
+	public void testSaveOrUpdate() {
+		Adress adress = new Adress();
+		adress.setCity("Paris");
+		adress.setCountry("France");
+		adress.setRegion("region");
+		adress.setZipCode("62000");
+		
+		Advertiser advertiser = new Advertiser();
+		advertiser.setEmail("test@gmail.com");
+		advertiser.setFirstName("Firstname");
+		advertiser.setLastName("last name");
+		advertiser.setPhoneNumber("+212 99090009999");
+		
+		IAppointment appointment = new Appointment();
+		appointment.setAdress(adress);
+		appointment.setAdvertiser(advertiser);
+		appointment.setAt("12/12/2010");
+		appointment.setDescription("description ....");
+		appointment.setPrice(12.12);
+		appointment.setType("residence");
+		
+		IAppointment appointmentsaved = this.appointmentService.saveOrUpdate(appointment);
+		
+		assertEquals(12.12, appointmentsaved.getPrice());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void delete() {
+		this.appointmentService.delete(null);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void getById() throws Exception {
+		this.appointmentService.getById(null);
+	}
 	
 }

@@ -38,76 +38,76 @@ public class AppointmentControllerITests {
 	@Autowired
 	AppointmentService appointmentService;
 	
-//	@Test
-//	public void testGetAll() throws Exception {
-//		
-//		mockMvc.perform(
-//					MockMvcRequestBuilders.get(API_URL + "all")
-//					.accept(MediaType.APPLICATION_JSON)
-//		).andExpect(status().isAccepted());
-//		
-//	}
-//	
-//	@Test
-//	public void testCreate() throws Exception {
-//		
-//		String objToJson = this.mapper.writeValueAsString(getAppointment());
-//		
-//		mockMvc.perform(
-//					MockMvcRequestBuilders.post(API_URL + "new")
-//					.accept(MediaType.APPLICATION_JSON)
-//					.characterEncoding("utf-8")
-//					.content(objToJson)
-//					.contentType(MediaType.APPLICATION_JSON)
-//				)
-//				.andExpect(status().isCreated());
-//	}
-//	
-//	@Test
-//	public void testDelete() throws Exception {
-//		
-//		mockMvc.perform(
-//				MockMvcRequestBuilders.delete(API_URL + "{id}/delete", "1")
-//				.accept(MediaType.APPLICATION_JSON)
-//				.contentType(MediaType.APPLICATION_JSON)
-//			)
-//			.andExpect(status().isOk());
-//	}
-//	
-//	@Test
-//	public void testGetById() throws Exception {
-//		
-//		IAppointment appointment = this.appointmentService.saveOrUpdate(getAppointment());
-//		mockMvc.perform(
-//					MockMvcRequestBuilders.get(API_URL + "get/by/{id}", String.valueOf(appointment.get_id()))
-//					.accept(MediaType.APPLICATION_JSON)
-//					.contentType(MediaType.APPLICATION_JSON)
-//				)
-//				.andExpect(status().isAccepted());
-//	}
-//	
-//	private IAppointment getAppointment() {
-//		
-//		Adress adress = new Adress();
-//		adress.setCity("Paris");
-//		adress.setCountry("France");
-//		adress.setRegion("region");
-//		adress.setZipCode("62000");
-//		
-//		Advertiser advertiser = new Advertiser();
-//		advertiser.setEmail("test@gmail.com");
-//		advertiser.setFirstName("Firstname");
-//		advertiser.setLastName("last name");
-//		advertiser.setPhoneNumber("+212 616714599");
-//		
-//		IAppointment appointment = new Appointment();
-//		appointment.setAdress(adress);
-//		appointment.setAdvertiser(advertiser);
-//		appointment.setAt("12/12/2010");
-//		appointment.setDescription("description ....");
-//		appointment.setPrice(12.12);
-//		appointment.setType("residence");
-//		
-//		return appointment;
-//	}
+	@Test
+	public void testGetAll() throws Exception {
+		
+		mockMvc.perform(
+					MockMvcRequestBuilders.get(API_URL + "all")
+					.accept(MediaType.APPLICATION_JSON)
+		).andExpect(status().isAccepted());
+		
+	}
+	
+	@Test
+	public void testCreate() throws Exception {
+		
+		String objToJson = this.mapper.writeValueAsString(getAppointment());
+		
+		mockMvc.perform(
+					MockMvcRequestBuilders.post(API_URL + "new")
+					.accept(MediaType.APPLICATION_JSON)
+					.characterEncoding("utf-8")
+					.content(objToJson)
+					.contentType(MediaType.APPLICATION_JSON)
+				)
+				.andExpect(status().isCreated());
+	}
+	
+	@Test
+	public void testDelete() throws Exception {
+		
+		mockMvc.perform(
+				MockMvcRequestBuilders.delete(API_URL + "{id}/delete", "1")
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON)
+			)
+			.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testGetById() throws Exception {
+		
+		IAppointment appointment = this.appointmentService.saveOrUpdate(getAppointment());
+		mockMvc.perform(
+					MockMvcRequestBuilders.get(API_URL + "get/by/{id}", String.valueOf(appointment.get_id()))
+					.accept(MediaType.APPLICATION_JSON)
+					.contentType(MediaType.APPLICATION_JSON)
+				)
+				.andExpect(status().isAccepted());
+	}
+	
+	private IAppointment getAppointment() {
+		
+		Adress adress = new Adress();
+		adress.setCity("Paris");
+		adress.setCountry("France");
+		adress.setRegion("region");
+		adress.setZipCode("62000");
+		
+		Advertiser advertiser = new Advertiser();
+		advertiser.setEmail("test@gmail.com");
+		advertiser.setFirstName("Firstname");
+		advertiser.setLastName("last name");
+		advertiser.setPhoneNumber("+212 616714599");
+		
+		IAppointment appointment = new Appointment();
+		appointment.setAdress(adress);
+		appointment.setAdvertiser(advertiser);
+		appointment.setAt("12/12/2010");
+		appointment.setDescription("description ....");
+		appointment.setPrice(12.12);
+		appointment.setType("residence");
+		
+		return appointment;
+	}
 }
