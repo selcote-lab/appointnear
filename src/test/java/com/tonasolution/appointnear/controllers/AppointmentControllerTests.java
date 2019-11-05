@@ -106,10 +106,10 @@ public class AppointmentControllerTests {
 	public void testGetById() throws Exception {
 		
 		IAppointment appointment = getAppointment();
-		when(this.appointmentService.getById(1L)).thenReturn(appointment);
+		when(this.appointmentService.getById(12L)).thenReturn(appointment);
 				
 		mockMvc.perform(
-					MockMvcRequestBuilders.get(API_URL + "get/{id}", "1")
+					MockMvcRequestBuilders.get(API_URL + "get/by/{id}", "12")
 					.accept(MediaType.APPLICATION_JSON)
 					.contentType(MediaType.APPLICATION_JSON)
 				)
