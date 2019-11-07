@@ -27,7 +27,6 @@ import com.tonasolution.appointnear.models.IAppointment;
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application.properties")
 public class AppointmentControllerITests {
-	
 	public static final String API_URL = "/api/v1/appointments/";
 	
 	@Autowired
